@@ -1,0 +1,128 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html class="login-alone">
+<head>
+    <title>OA后台登陆页面</title>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/res/ui/css/screen.css" rel="stylesheet" />
+    <link href="~/Content/res/ui/css/base.css" rel="stylesheet" />
+    <link href="~/Content/res/passport/css/login.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/jquery", "~/bundles/easyui")
+    <script>
+        $(function () {
+            $("#vcodeImg").click(function () {
+                changeCheckCode();
+            });
+            $("#btnLogin").click(function () {
+                //$.post("/Login/index2", {
+                //    UName: $("#email").val(),
+                //    UPwd: $("#password").val(),
+                //    vcode: $("#vcode").val()
+                //}, function (data) {
+                //    var state = data.split(":")[0];
+                //    var msg = data.split(":")[1];
+                //    if (state == "ok") {
+                //        window.location.href = "/Home/Index";
+                //    }
+                //    else {
+                //        $("#login-error").html(msg);
+                //        changeCheckCode();
+                //    }
+                //});
+                $.ajax({
+                    type: "POST",
+                    url: "/Login/index",
+                    data: {
+                        UName: $("#email").val(),
+                        UPwd: $("#password").val(),
+                        vcode: $("#vcode").val()
+                    },
+                    success: function (data) {
+                        var state = data.split(":")[0];
+                        var msg = data.split(":")[1];
+                        if (state == "ok") {
+                            window.location.href = "/Home/Index";
+                        }
+                        else {
+                            $("#login-error").html(msg);
+                            changeCheckCode();
+                        }
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        $("#login-error").html("服务器连接失败");
+                    }
+                });
+            });
+        });
+
+        function changeCheckCode() {
+            $("#vcodeImg").attr("src", $("#vcodeImg").attr("src") + 1);
+        }
+    </script>
+</head>
+<body>
+    <div class="logina-logo" style="height: 55px">
+        <h1 style="font-size:xx-large">OA后台登陆页面</h1>
+    </div>
+    <div class="logina-main main clearfix">
+        <div class="tab-con">
+            <div id='login-error' class="error-tip"></div>
+            <table border="0" cellspacing="0" cellpadding="0">
+                <tbody>
+                    <tr>
+                        <th>账户</th>
+                        <td width="245">
+                            <input id="email" type="text" name="email" placeholder="电子邮箱/手机号" autocomplete="off" value="">
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th>密码</th>
+                        <td width="245">
+                            <input id="password" type="password" name="password" placeholder="请输入密码" autocomplete="off">
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr id="tr-vcode">
+                        <th>验证码</th>
+                        <td width="245">
+                            <div class="valid">
+                                <input id="vcode" type="text" name="vcode"><img id="vcodeImg" src="/Login/ShowValidateCode/1" width="85" height="35" alt="验证码">
+                            </div>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr class="find">
+                        <th></th>
+                        <td>
+                            <div>
+                                <label class="checkbox" for="chk11"><input style="height: auto;" id="chk11" type="checkbox" name="remember_me">记住我</label>
+                                <a href="passport/forget-pwd">忘记密码？</a>
+                            </div>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td width="245"><input id="btnLogin" class="confirm" type="button" value="登  录"></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            <input type="hidden" name="refer" value="site/">
+        </div>
+        <div class="reg">
+            <p>还没有账号？<br>赶快免费注册一个吧！</p>
+            <a class="reg-btn" href="#">立即免费注册</a>
+        </div>
+    </div>
+    <div id="footer">
+        <div class="copyright">Copyright © 2014 js-css.cn. All Rights Reserved. js代码网 版权所有</div>
+    </div>
+</body>
+</html>
+
