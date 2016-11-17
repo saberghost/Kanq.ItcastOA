@@ -13,6 +13,7 @@ namespace Kanq.ItcastOA.Model
         public UserInfo()
         {
             R_UserInfo_ActionInfo = new HashSet<R_UserInfo_ActionInfo>();
+            RoleInfo = new HashSet<RoleInfo>();
         }
 
         public int ID { get; set; }
@@ -59,5 +60,7 @@ namespace Kanq.ItcastOA.Model
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<R_UserInfo_ActionInfo> R_UserInfo_ActionInfo { get; set; }
+
+        public virtual ICollection<RoleInfo> RoleInfo { get; set; }
     }
 }

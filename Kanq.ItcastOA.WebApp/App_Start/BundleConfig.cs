@@ -23,6 +23,12 @@ namespace Kanq.ItcastOA.WebApp
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/ligerUI").Include(
+                "~/Scripts/js/core/base.js",
+                "~/Scripts/js/ligerui.all.js"));
+
+            bundles.Add(new StyleBundle("~/Content/ligerUI").Include("~/Content/skins/Aqua/css/ligerui-all.css"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));

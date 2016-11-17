@@ -13,7 +13,7 @@ using Kanq.ItcastOA.WebApp.Models;
 namespace Kanq.ItcastOA.WebApp.Controllers
 {
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : System.Web.Mvc.Controller
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;

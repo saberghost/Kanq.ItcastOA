@@ -9,7 +9,7 @@ namespace Kanq.ItcastOA.Model.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
             ContextKey = "Kanq.ItcastOA.Model.OAEntities";
         }
 

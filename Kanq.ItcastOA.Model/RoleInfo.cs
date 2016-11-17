@@ -9,6 +9,12 @@ namespace Kanq.ItcastOA.Model
     [Table("RoleInfo")]
     public partial class RoleInfo
     {
+        public RoleInfo()
+        {
+            UserInfo = new HashSet<UserInfo>();
+            ActionInfo = new HashSet<ActionInfo>();
+        }
+
         public int ID { get; set; }
 
         [Required]
@@ -25,5 +31,10 @@ namespace Kanq.ItcastOA.Model
         public DateTime ModifiedOn { get; set; }
 
         public string Sort { get; set; }
+
+        public virtual ICollection<UserInfo> UserInfo { get; set; }
+
+        public virtual ICollection<ActionInfo> ActionInfo { get; set; }
+
     }
 }

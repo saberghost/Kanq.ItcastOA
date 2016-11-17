@@ -4,6 +4,7 @@ namespace Kanq.ItcastOA.Model
     using System.Data.Entity;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
+    using System.Data.Entity.ModelConfiguration.Conventions;
 
     public partial class OAEntities : DbContext
     {
@@ -40,6 +41,7 @@ namespace Kanq.ItcastOA.Model
                 .HasMany(e => e.R_UserInfo_ActionInfo)
                 .WithRequired(e => e.UserInfo)
                 .WillCascadeOnDelete(false);
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
     }
 }

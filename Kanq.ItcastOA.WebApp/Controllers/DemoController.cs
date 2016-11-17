@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace Kanq.ItcastOA.WebApp.Controllers
 {
-    public class DemoController : Controller
+    public class DemoController : System.Web.Mvc.Controller
     {
         // GET: Demo
         public ActionResult Index()

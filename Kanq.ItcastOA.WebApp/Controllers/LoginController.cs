@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace Kanq.ItcastOA.WebApp.Controllers
 {
-    public class LoginController : Controller
+    public class LoginController : System.Web.Mvc.Controller
     {
         public IUserInfoService userInfoService { get; set; }
         // GET: Login
@@ -35,7 +35,11 @@ namespace Kanq.ItcastOA.WebApp.Controllers
             {
                 return Content("no:用户名或密码错误");
             }
-            Session["userInfo"] = userInfo;
+            //Session["userInfo"] = userInfo;
+            string sessionID = Guid.NewGuid().ToString();
+            //将用户信息存在memcache中，过期时间20分钟
+            MemcacheHelper.Set(sessionID, SerializeHelper.SerializeToString(userInfo),DateTime.Now.AddMinutes(20));
+            Response.Cookies["sessionID"].Value = sessionID;
             return Content("ok:验证通过");
         }
 

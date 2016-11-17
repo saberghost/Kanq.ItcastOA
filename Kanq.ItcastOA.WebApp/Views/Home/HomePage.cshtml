@@ -1,0 +1,62 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>HomePage</title>
+    @Styles.Render("~/Content/easyui")
+    @Scripts.Render("~/bundles/jquery", "~/bundles/easyui")
+    <script>
+        $(function () {
+            bindDetailClick();
+        });
+
+        function bindDetailClick() {
+            $(".detailLink").click(function () {
+                var title = $(this).text();
+                var src = $(this).attr("src");
+                var isExc = $("#tt").tabs("exists", title);
+                if (isExc) {
+                    $("#tt").tabs("select", title);
+                    return;
+                }
+                $("#tt").tabs('add', {
+                    title: title,
+                    content: showContent(src),
+                    closable: true
+                });
+            });
+        }
+
+        function showContent(src) {
+            return '<iframe src="' + src + '" style="width:100%;height:99%;" scrolling="no" frameBorder="0"></iframe>';
+        }
+    </script>
+</head>
+<body class="easyui-layout">
+    <div region="north" border="false" split="true" style="height:100px;background-image:url(/Content/res/passport/images/login-al.png)"></div>
+    <div region="south" border="false" split="true" style="height:100px;"></div>
+    <div region="west" split="true" title="West" style="width:150px;">
+        <div id="aa" class="easyui-accordion" border="false" style="width:100%">
+            <div title="用户管理" iconCls="icon-save" selected="true" style="padding:10px;">
+                <a class="detailLink" href="javascript:void(0)" src="/UserInfo/Index">用户管理</a>
+            </div>
+            <div title="角色管理" iconCls="icon-reload" style="padding:10px;">
+                <a class="detailLink" href="javascript:void(0)" src="/RoleInfo/Index">角色管理</a>
+            </div>
+        </div>
+    </div>
+    <div region="center" title="center title" style="background:#eee;">
+        <div id="tt" class="easyui-tabs" fit="true" border="false">
+            <div title="用户管理" style="display:none;">
+                <iframe src="/UserInfo/Index" style="width:100%;height:99%;" scrolling="no" frameBorder="0"></iframe>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

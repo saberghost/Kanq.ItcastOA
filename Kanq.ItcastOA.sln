@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kanq.ItcastOA.Common", "Kan
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kanq.ItcastOA.WebApp", "Kanq.ItcastOA.WebApp\Kanq.ItcastOA.WebApp.csproj", "{BF13B2D2-9F8D-4BF3-9A2A-97F5C4EDBEF5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Demo", "Demo", "{1CE9ABB1-B89A-4DB5-8EFE-4EF426001D93}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication1", "ConsoleApplication1\ConsoleApplication1.csproj", "{CBA61340-8BD3-43BC-BB28-A44E845FE09C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,8 +61,15 @@ Global
 		{BF13B2D2-9F8D-4BF3-9A2A-97F5C4EDBEF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BF13B2D2-9F8D-4BF3-9A2A-97F5C4EDBEF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BF13B2D2-9F8D-4BF3-9A2A-97F5C4EDBEF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBA61340-8BD3-43BC-BB28-A44E845FE09C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBA61340-8BD3-43BC-BB28-A44E845FE09C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBA61340-8BD3-43BC-BB28-A44E845FE09C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBA61340-8BD3-43BC-BB28-A44E845FE09C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CBA61340-8BD3-43BC-BB28-A44E845FE09C} = {1CE9ABB1-B89A-4DB5-8EFE-4EF426001D93}
 	EndGlobalSection
 EndGlobal

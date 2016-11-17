@@ -6,24 +6,15 @@ using System.Web.Mvc;
 
 namespace Kanq.ItcastOA.WebApp.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : System.Web.Mvc.Controller
     {
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult HomePage()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
     }

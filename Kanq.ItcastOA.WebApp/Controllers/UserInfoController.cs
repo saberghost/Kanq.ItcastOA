@@ -2,6 +2,7 @@
 using Kanq.ItcastOA.IBLL;
 using Kanq.ItcastOA.Model;
 using Kanq.ItcastOA.Model.Search;
+using Kanq.ItcastOA.WebApp.Models;
 using Kanq.ItcastOA.WebApp.Models.EnumType;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -13,7 +14,7 @@ using System.Web.Mvc;
 
 namespace Kanq.ItcastOA.WebApp.Controllers
 {
-    public class UserInfoController : Controller
+    public class UserInfoController : BaseController
     {
         public IUserInfoService userInfoService { get; set; }
         // GET: UserInfo
