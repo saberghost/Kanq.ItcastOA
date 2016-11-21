@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Kanq.ItcastOA.IBLL
 {
-    public interface IUserInfoService:IBaseService<UserInfo>
+    public partial interface IUserInfoService:IBaseService<UserInfo>
     {
         bool DeleteEntitys(List<int> list);
 

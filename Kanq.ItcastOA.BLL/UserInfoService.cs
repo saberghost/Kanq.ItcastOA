@@ -9,7 +9,7 @@ using Kanq.ItcastOA.Model.Search;
 
 namespace Kanq.ItcastOA.BLL
 {
-    public class UserInfoService : BaseService<UserInfo>, IUserInfoService
+    public partial class UserInfoService : BaseService<UserInfo>, IUserInfoService
     {
         public bool DeleteEntitys(List<int> list)
         {
@@ -34,11 +34,6 @@ namespace Kanq.ItcastOA.BLL
             }
             userInfoSearch.TotalCount = temp.Count();
             return temp.OrderBy(u => u.ID).Skip((userInfoSearch.PageIndex - 1) * userInfoSearch.PageSize).Take(userInfoSearch.PageSize);
-        }
-
-        public override void SetCurrentDal()
-        {
-            CurrentDal = CurrentDBSession.UserInfoDal;
         }
     }
 }

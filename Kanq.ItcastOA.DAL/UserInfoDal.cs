@@ -9,7 +9,8 @@ using System.Linq.Expressions;
 
 namespace Kanq.ItcastOA.DAL
 {
-    public class UserInfoDal :BaseDal<UserInfo>, IUserInfoDal
+    public partial class UserInfoDal :BaseDal<UserInfo>, IUserInfoDal
     {
+
     }
 }

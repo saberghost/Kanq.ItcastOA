@@ -5,7 +5,6 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.Reflection" #>
 <#@ import namespace="System.IO" #>
-<#@ output extension=".cs" #>
 <#    List<string> modelList=new List<string>();
     string fullPath = @"D:\WebSites\Kanq.ItcastOA\Kanq.ItcastOA.Model\obj\Debug\Kanq.ItcastOA.Model.dll";
     foreach (Type t in Assembly.LoadFile(fullPath).GetTypes())

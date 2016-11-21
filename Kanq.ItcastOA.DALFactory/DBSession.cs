@@ -10,26 +10,26 @@ using System.Threading.Tasks;
 
 namespace Kanq.ItcastOA.DALFactory
 {
-    public class DBSession : IDBSession
+    public partial class DBSession : IDBSession
     {
 
-        private IUserInfoDal _userInfoDAl;
+        //private IUserInfoDal _userInfoDAl;
 
-        public IUserInfoDal UserInfoDal
-        {
-            get
-            {
-                if (_userInfoDAl == null)
-                {
-                    _userInfoDAl = AbstractFactory.CreateUserInfoDal();
-                }
-                return _userInfoDAl;
-            }
-            set
-            {
-                _userInfoDAl = value;
-            }
-        }
+        //public IUserInfoDal UserInfoDal
+        //{
+        //    get
+        //    {
+        //        if (_userInfoDAl == null)
+        //        {
+        //            _userInfoDAl = AbstractFactory.CreateUserInfoDal();
+        //        }
+        //        return _userInfoDAl;
+        //    }
+        //    set
+        //    {
+        //        _userInfoDAl = value;
+        //    }
+        //}
 
         public DbContext db
         {

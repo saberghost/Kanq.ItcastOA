@@ -9,10 +9,9 @@ using System.Web.Configuration;
 
 namespace Kanq.ItcastOA.IDAL
 {
-    public interface IDBSession
+    public partial interface IDBSession
     {
         DbContext db { get; }
-        IUserInfoDal UserInfoDal { get; set; }
         bool SaveChanges();
     }
 }

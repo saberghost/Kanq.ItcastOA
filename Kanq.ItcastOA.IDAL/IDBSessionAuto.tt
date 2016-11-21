@@ -1,16 +1,19 @@
 ﻿<#@include file="$(SolutionDir)\Reference.ttinclude" #>
-using Kanq.ItcastOA.Model;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
-using System.Linq.Expressions;
+using System.Web.Configuration;
 
 namespace Kanq.ItcastOA.IDAL
 {
+    public partial interface IDBSession
+    {
 <#    foreach(string modelName in modelList){ #>
-    public partial interface I<#=modelName#>Dal:IBaseDal<<#=modelName#>>{}
-
+        I<#=modelName#>Dal <#=modelName#>Dal { get; set; }
 <#    } #>
+    }
 }

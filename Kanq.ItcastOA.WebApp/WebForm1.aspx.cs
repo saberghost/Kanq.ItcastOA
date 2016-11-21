@@ -13,7 +13,8 @@ namespace Kanq.ItcastOA.WebApp
         protected void Page_Load(object sender, EventArgs e)
         {
             //MemcacheHelper.Set("name", "Tom");
-            Response.Write(MemcacheHelper.Get("name").ToString());
+            //Response.Write(MemcacheHelper.Get("name").ToString());
+            
         }
     }
 }

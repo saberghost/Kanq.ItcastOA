@@ -1,0 +1,23 @@
+﻿<#@include file="$(SolutionDir)\Reference.ttinclude" #>
+using Kanq.ItcastOA.IBLL;
+using Kanq.ItcastOA.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Kanq.ItcastOA.Model.Search;
+
+namespace Kanq.ItcastOA.BLL
+{
+<#    foreach(string modelName in modelList){ #>
+    public partial class <#=modelName#>Service : BaseService<<#=modelName#>>, I<#=modelName#>Service
+    {
+        public override void SetCurrentDal()
+        {
+            CurrentDal = CurrentDBSession.<#=modelName#>Dal;
+        }
+    }
+
+<#    } #>
+}

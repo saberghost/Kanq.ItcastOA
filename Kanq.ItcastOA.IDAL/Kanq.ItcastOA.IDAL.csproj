@@ -50,13 +50,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dal.cs">
+    <Compile Include="IBaseDal.cs" />
+    <Compile Include="IDAL1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Dal.tt</DependentUpon>
+      <DependentUpon>IDAL.tt</DependentUpon>
     </Compile>
-    <Compile Include="IBaseDal.cs" />
     <Compile Include="IDBSession.cs" />
+    <Compile Include="IDBSessionAuto.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IDBSessionAuto.tt</DependentUpon>
+    </Compile>
     <Compile Include="IUserInfoDal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -71,9 +76,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Dal.tt">
+    <Content Include="IDAL.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>Dal.cs</LastGenOutput>
+      <LastGenOutput>IDAL1.cs</LastGenOutput>
+    </Content>
+    <Content Include="IDBSessionAuto.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>IDBSessionAuto.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>
