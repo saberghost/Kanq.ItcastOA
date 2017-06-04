@@ -41,6 +41,9 @@
                         UPwd: $("#password").val(),
                         vcode: $("#vcode").val()
                     },
+                    beforeSend:function () {
+                        $("#btnLogin").val("正在登陆...");
+                    },
                     success: function (data) {
                         var state = data.split(":")[0];
                         var msg = data.split(":")[1];

@@ -18,12 +18,11 @@ namespace Kanq.ItcastOA.Model
 
         public int ID { get; set; }
 
-        public DateTime SubTime { get; set; }
+        public DateTime? SubTime { get; set; }
 
         public short DelFlag { get; set; }
 
-        [Required]
-        public string ModifiedOn { get; set; }
+        public DateTime? ModifiedOn { get; set; }
 
         [StringLength(256)]
         public string Remark { get; set; }
@@ -48,14 +47,16 @@ namespace Kanq.ItcastOA.Model
 
         public string Sort { get; set; }
 
-        public short ActionTypeEnum { get; set; }
+        public short? ActionTypeEnum { get; set; }
+
+        public bool IsMenu { get; set; }
 
         [StringLength(512)]
         public string MenuIcon { get; set; }
 
-        public int IconWidth { get; set; }
+        public int? IconWidth { get; set; }
 
-        public int IconHeight { get; set; }
+        public int? IconHeight { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<R_UserInfo_ActionInfo> R_UserInfo_ActionInfo { get; set; }

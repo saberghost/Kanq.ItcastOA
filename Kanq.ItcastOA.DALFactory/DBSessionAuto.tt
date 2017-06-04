@@ -14,7 +14,7 @@ namespace Kanq.ItcastOA.DALFactory
     public partial class DBSession : IDBSession
     {
 <#foreach(string modelName in modelList){ #>
-        public I<#=modelName#>Dal <#=modelName#>Dal { get; set; } = SpringNetHelper.GetObject<<#=modelName#>Dal>("<#=modelName#>Dal");
+        public I<#=modelName#>Dal <#=modelName#>Dal { get; set; } = SpringNetHelper.GetObject<I<#=modelName#>Dal>("<#=modelName#>Dal");
 <#} #>
     }
 }

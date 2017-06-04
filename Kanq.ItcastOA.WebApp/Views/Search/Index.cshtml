@@ -1,0 +1,52 @@
+﻿
+@{
+    Layout = null;
+}
+@using Kanq.ItcastOA.WebApp.Models
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    @Styles.Render("~/Content/easyui")
+    @Scripts.Render("~/bundles/jquery", "~/bundles/easyui")
+    <script>
+        $(function () {
+            $("#txtSearch").combobox({
+                url: "/Search/AutoComplete",
+                valueField: 'key',
+                textField: 'value',
+                panelHeight: null,
+                onChange: function (newValue, oldValue) {
+                    if (newValue == "") {
+                        $(this).combobox("hidePanel");
+                    }
+                },
+                mode: "remote",
+                hasDownArrow: false
+            });
+        });
+    </script>
+</head>
+<body>
+    <div>
+        <form class="cf form-wrapper" action="/Search/SearchContent" method="get">
+            <input id="txtSearch" type="text" name="txtSearch" />
+            <input type="submit" name="btnSearch" value="搜一搜" />
+            @*<input type="submit" name="btnCreate" value="创建索引库" />*@
+        </form>
+        <dl>
+            @if (ViewBag.list != null)
+            {
+                foreach (ViewModelContent viewModel in (List<ViewModelContent>)ViewBag.list)
+                {
+                    <dt><a href="javascript:void(0)">@viewModel.Title</a></dt>
+                    <dd>@Html.Raw(viewModel.ContentDescription)</dd>
+                }
+            }
+        </dl>
+    </div>
+</body>
+</html>

@@ -27,6 +27,9 @@ namespace Kanq.ItcastOA.Model.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+            context.UserInfo.AddOrUpdate(
+                new Model.UserInfo() { ID = 1, UName = "admin", UPwd = "admin" ,DelFlag=0,ModifiedOn=DateTime.Now,SubTime=DateTime.Now,Remark="≤‚ ‘"}
+                );
         }
     }
 }

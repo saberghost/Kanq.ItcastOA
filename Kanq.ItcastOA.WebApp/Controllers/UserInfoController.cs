@@ -14,9 +14,12 @@ using System.Web.Mvc;
 
 namespace Kanq.ItcastOA.WebApp.Controllers
 {
-    public class UserInfoController : BaseController
+    public class UserInfoController :Controller
     {
         public IUserInfoService userInfoService { get; set; }
+        public IRoleInfoService RoleInfoService { get; set; }
+
+        short delFlag = (short)DeleteEnumType.Normal;
         // GET: UserInfo
         public ActionResult Index()
         {
@@ -26,7 +29,6 @@ namespace Kanq.ItcastOA.WebApp.Controllers
         public ActionResult GetUserInfoList(int page, int rows, string UName, string Remark)
         {
             //int totalCount = 0;
-            short delFlag = (short)DeleteEnumType.Normal;
             UserInfoSearch userInfoSearch = new UserInfoSearch()
             {
                 PageIndex = page,
@@ -85,6 +87,37 @@ namespace Kanq.ItcastOA.WebApp.Controllers
             {
                 return Content("no");
             }
+        }
+
+        public ActionResult SetRole(int id)
+        {
+            UserInfo userInfo = userInfoService.LoadEntities(t => t.ID == id).FirstOrDefault();
+            ViewBag.allRoleInfos = RoleInfoService.LoadEntities(t => t.DelFlag == delFlag).ToList();
+            ViewBag.existsRoleIds = userInfo.RoleInfo.Select(t => t.ID).ToList();
+            return View(userInfo);
+        }
+
+        public ActionResult ProcessSetRole(int userId)
+        {
+            List<int> roleIds = new List<int>();
+            foreach (var key in Request.Form.AllKeys)
+            {
+                if (key.StartsWith("ckb_"))
+                {
+                    int roleId = int.Parse(key.Replace("ckb_", ""));
+                    roleIds.Add(roleId);
+                }
+            }
+            userInfoService.setRole(userId, roleIds);
+            return Content("ok");
+        }
+
+        public ActionResult SetAction(int id)
+        {
+            UserInfo userInfo = userInfoService.LoadEntities(t => t.ID == id).FirstOrDefault();
+            //ViewBag.allRoleInfos = RoleInfoService.LoadEntities(t => t.DelFlag == delFlag).ToList();
+            //ViewBag.existsRoleIds = userInfo.RoleInfo.Select(t => t.ID).ToList();
+            return View(userInfo);
         }
     }
 }

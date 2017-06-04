@@ -1,0 +1,362 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+        @Styles.Render("~/Content/easyui")
+    <style>
+    </style>
+        @Scripts.Render("~/bundles/jquery", "~/bundles/easyui")
+        <script src="~/Scripts/MyAjaxForm.js"></script>
+    <script>
+        $(function () {
+            $("#AddDiv").css("display", "none");
+            $("#EditDiv").css("display", "none");
+            $("#SetRoleDiv").css("display", "none");
+            loadDataGrid();
+            $("#btnSearch").linkbutton({
+                text: "查询",
+                iconCls: "icon-search",
+                onClick: function () {
+                    reloadData();
+                }
+            });
+
+            bindUploadBtnClick();
+        });
+
+        function bindUploadBtnClick() {
+            $("#btnUploadFile").click(function () {
+                $("#AddForm").ajaxSubmit({
+                    url: "/ActionInfo/UploadImage",
+                    type:"Post",
+                    success: function (data) {
+                        $("#MenuIcon").val(data);
+                        $("#uploadImage").html("<img src='" + data + "' width='100px' height='100px' />");
+                    },
+                });
+            });
+        }
+
+        function afterSetRole() {
+            $.messager.alert("提示", "角色设置成功", "error");
+            $("#SetRoleDiv").dialog("close");
+        }
+
+        function reloadData() {
+            $("#tt").datagrid("load", {
+                ActionInfoName: $("#txtActionInfoName").val(),
+                Url: $("#txtUrl").val()
+            });
+        }
+
+        function loadDataGrid() {
+            /// <summary>加载数据列表</summary>
+            $("#tt").datagrid({
+                toolbar: [{
+                    id: 'btnAdd',
+                    text: '添加',
+                    iconCls: 'icon-add',
+                    handler: 'AddActionInfo'
+                }, {
+                    id: 'btnEdit',
+                    text: '修改',
+                    iconCls: 'icon-edit',
+                    handler: 'EditActionInfo'
+                }, {
+                    id: 'btnDel',
+                    text: '删除',
+                    iconCls: 'icon-remove',
+                    handler: 'DelActionInfo'
+                }, {
+                    id: 'btnSetRole',
+                    text: '设置角色',
+                    iconCls: 'icon-undo',
+                    handler: 'SetRole'
+                }],
+                pagination: true,//分页
+                pageSize: 10,//每页记录数
+                pageList: [10, 20],//可选择的每页记录数
+                height: 500,
+                url: "/ActionInfo/GetActionInfoList",
+                //fit: true,
+                //queryParams: { action: "ShowList" },
+                columns:
+                [[
+                    { field: 'ck', checkbox: true },
+                    { field: 'ID', title: '编号', align: "center", width: 80 },
+                    { field: 'ActionInfoName', title: '权限名', align: "center", width: 80},
+                    { field: 'Url', title: 'Url', align: "center", width: 80 },
+                    { field: 'HttpMethod', title: '请求方式', align: "center", width: 80 },
+                    { field: 'Remark', title: '备注', align: "center", width: 150 },
+                    {
+                        field: 'MenuIcon', title: '菜单图标', align: "center", width: 150,
+                        formatter: function (value, row, index) {
+                            return "<img src='"+value+"' width='100px' height='100px' />"
+                        }
+                    },
+                    {
+                        field: 'IsMenu', title: '菜单显示', align: "center", width: 150,
+                        formatter: function (value, row, index) {
+                            return value == true ? "是" : "否";
+                        }
+                    },
+                    { field: 'SubTime', title: '注册时间', align: "center", width: 150 },
+                    { field: 'ModifiedOn', title: '修改时间', align: "center", width: 150 },
+                    { field: 'Sort', title: '排序字段', align: "center", width: 150 }
+                ]],
+                striped: true,//显示条纹
+                singleSelect: false//单选模式
+            })
+        };
+
+        //设置用户角色
+        function SetRole() {
+            var rows = $("#tt").datagrid("getSelections");
+            if (rows.length != 1) {
+                $.messager.alert("提示", "请选择一行进行设置", "error");
+                return;
+            }
+            $("#SetRoleDiv").css("display", "");
+            var id = rows[0].ID;
+            $("#SetRoleIframe").attr("src", "/ActionInfo/SetRole/" + id);
+            $("#SetRoleDiv").dialog({
+                //width: 750,
+                //height: 350,
+                title: "设置权限",
+                collapsible: false,
+                maximizable: false,
+                resizable: false,
+                modal: true,
+                onClose: function () {
+                },
+                toolbar: [{
+                    text: '保存',
+                    iconCls: 'icon-save',
+                    handler: function () {
+                        $("#SetRoleIframe")[0].contentWindow.submitForm();
+                    }
+                }],
+            });
+        }
+
+        function EditActionInfo() {
+            var rows = $("#tt").datagrid("getSelections");
+            if (rows.length != 1) {
+                $.messager.alert("提示", "请选择一行进行修改", "error");
+                return;
+            }
+            var id = rows[0].ID;
+            $("#EditDiv").css("display", "block");
+            $("#EditForm").form("load", "/ActionInfo/ShowActionInfo/" + id);
+            $("#EditDiv").dialog({
+                //width: 750,
+                //height: 350,
+                title: "修改权限",
+                collapsible: false,
+                maximizable: false,
+                resizable: false,
+                modal: true,
+                onClose: function () {
+                    $("#EditForm").form("clear");
+                },
+                toolbar: [{
+                    text: '保存',
+                    iconCls: 'icon-save',
+                    handler: function () {
+                        $("#EditForm").form("submit", {
+                            url: "/ActionInfo/EditActionInfo",
+                            onSubmit: function () {
+                                return $("#EditForm").form("validate");
+                            },
+                            success: function (data) {
+                                if (data && data == "ok") {
+                                    $("#tt").datagrid("reload");
+                                    $("#EditDiv").dialog("close");
+                                }
+                                else {
+                                    $.messager.alert("警告", "权限修改失败", "error");
+                                }
+                            }
+                        });
+                    }
+                }],
+            });
+        }
+
+        function AddActionInfo() {
+            $("#AddDiv").css("display", "block");
+            $("#AddDiv").dialog({
+                //width: 750,
+                //height: 350,
+                title: "添加权限",
+                collapsible: false,
+                maximizable: false,
+                resizable: false,
+                modal: true,
+                onClose: function () {
+                    $("#AddDiv").form("clear");
+                },
+                toolbar: [{
+                    text: '保存',
+                    iconCls: 'icon-save',
+                    handler: function () {
+                        $("#AddForm").form("submit", {
+                            url: "/ActionInfo/AddActionInfo",
+                            onSubmit: function () {
+                                return $("#AddForm").form("validate");
+                            },
+                            success: function (data) {
+                                if (data && data == "ok") {
+                                    $("#tt").datagrid("reload");
+                                    $("#AddDiv").dialog("close");
+                                }
+                                else {
+                                    $.messager.alert("警告", "权限添加失败", "error");
+                                }
+                            }
+                        });
+                    }
+                }],
+            });
+        }
+
+        function DelActionInfo() {
+            var rows = $("#tt").datagrid("getSelections");
+            if (rows.length == 0) {
+                $.messager.alert("提示", "请选择一行进行删除", "error");
+                return;
+            }
+            $.messager.confirm("提示", "确定要删除吗？", function (r) {
+                if (r) {
+                    var idList = [];
+                    var rowsLength = rows.length;
+                    for (var i = 0; i < rowsLength; i++) {
+                        idList.push(rows[i].ID);
+                    }
+                    $.post("/ActionInfo/DeleteActionInfo", { idList: idList.join(",") }, function (data) {
+                        if (data == "ok") {
+                            $("#tt").datagrid("reload");
+                        }
+                        else {
+                            $.messager.alert("提示", "删除失败", "error");
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="master">
+        <div id="Search">
+            权限名:<input type="text" id="txtActionInfoName" name="ActionInfoName" />&nbsp;&nbsp;&nbsp;
+            URL:<input type="text" id="txtUrl" name="Url" />
+            <a id="btnSearch"></a>
+        </div>
+        <div>
+            <table id="tt"></table>
+        </div>
+    </div>
+    <!--新增权限-->
+    <div id="AddDiv">
+        <form id="AddForm" method="post" enctype="multipart/form-data">
+            <table>
+                <tr>
+                    <td>权限名:</td>
+                    <td><input type="text" name="ActionInfoName" /></td>
+                </tr>
+                <tr>
+                    <td>Url:</td>
+                    <td><input type="text" name="Url" /></td>
+                </tr>
+                <tr>
+                    <td>请求方式</td>
+                    <td>
+                        <select name="HttpMethod">
+                            <option value="Get">Get</option>
+                            <option value="Post">Post</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>菜单图标:</td>
+                    <td>
+                        <input type="hidden" id="MenuIcon" name="MenuIcon" />
+                        <input type="file" name="fileMenuIcon" />
+                        <input id="btnUploadFile" type="button"  value="上传" />
+                        <div id="uploadImage"></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>菜单显示:</td>
+                    <td><input type="checkbox" name="IsMenu"/></td>
+                </tr>
+                <tr>
+                    <td>排序字段:</td>
+                    <td><input type="text" name="Sort" /></td>
+                </tr>
+                <tr>
+                    <td>备注:</td>
+                    <td><input type="text" name="Remark" /></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <!--修改权限-->
+    <div id="EditDiv">
+        <form id="EditForm" method="post">
+            <input type="hidden" name="ID" />
+            <input type="hidden" name="DelFlag" />
+            <input type="hidden" name="SubTime" />
+            <table>
+                <tr>
+                    <td>权限名:</td>
+                    <td><input type="text" name="ActionInfoName" /></td>
+                </tr>
+                <tr>
+                    <td>Url:</td>
+                    <td><input type="text" name="Url" /></td>
+                </tr>
+                <tr>
+                    <td>请求方式</td>
+                    <td>
+                        <select name="HttpMethod">
+                            <option value="Get">Get</option>
+                            <option value="Post">Post</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>菜单图标:</td>
+                    <td><input type="text" name="MenuIcon" /></td>
+                </tr>
+                <tr>
+                    <td>菜单显示:</td>
+                    <td><input type="checkbox" name="IsMenu" /></td>
+                </tr>
+                <tr>
+                    <td>排序字段:</td>
+                    <td><input type="text" name="Sort" /></td>
+                </tr>
+                <tr>
+                    <td>备注:</td>
+                    <td><input type="text" name="Remark" /></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <!--设置角色-->
+    <div id="SetRoleDiv">
+        <iframe id="SetRoleIframe" src="javascript:void(0)"></iframe>
+    </div>
+</body>
+</html>

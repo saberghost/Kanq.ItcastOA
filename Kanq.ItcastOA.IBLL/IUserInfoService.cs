@@ -13,5 +13,7 @@ namespace Kanq.ItcastOA.IBLL
         bool DeleteEntitys(List<int> list);
 
         IQueryable<UserInfo> LoadSerachEntities(UserInfoSearch userInfoSearch, short delFlag);
+
+        bool setRole(int userId, List<int> roleIds);
     }
 }

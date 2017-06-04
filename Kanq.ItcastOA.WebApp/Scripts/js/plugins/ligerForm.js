@@ -30,7 +30,7 @@
         labelWidth: 90,
         //间隔宽度
         space: 40,
-        rightToken: '：',
+        rightToken: ':',
         //标签对齐方式
         labelAlign: 'left',
         //控件对齐方式
@@ -41,7 +41,7 @@
         /*
         数组的集合,支持的类型包括在$.ligerDefaults.Form.editors,这个editors同Grid的editors继承于base.js中提供的编辑器集合,具体可以看liger.editors
         字段的参数参考 127行左右的 $.ligerDefaults.Form_fields,
-        ui内置的编辑表单元素都会调用ui的表单插件集合,所以这些字段都有属于自己的"liger对象",可以同liger.get("[ID]")的方式获取，这里的[ID]获取方式优先级如下：
+        ui内置的编辑表单元素都会调用ui的表单插件集合,所以这些字段都有属于自己的"liger对象",可以同liger.get("[ID]")的方式获取，这里的[ID]获取方式优先级如下:
         1,定义了field.id 则取field.id 
         2,如果是下拉框和PopupEdit，并且定义了comboboxName，则取comboboxName(如果表单定义了prefixID,需要加上)
         3,默认取field.name(如果表单定义了prefixID,需要加上) 
@@ -172,7 +172,7 @@
     };
 
     //description 自动创建自定义风格的表单-编辑器构造函数
-    //格式为：
+    //格式为:
     //{
     //    name: jinput.attr("name"),
     //    control: {
@@ -531,7 +531,7 @@
         _preSetFields: function (fields)
         {
             var g = this, p = this.options, lastVisitedGroup = null, lastVisitedGroupIcon = null;
-            //分组： 先填充没有设置分组的字段
+            //分组: 先填充没有设置分组的字段
             $(p.fields).each(function (i, field)
             {
                 if (p.readonly || field.readonly || (field.editor && field.editor.readonly))

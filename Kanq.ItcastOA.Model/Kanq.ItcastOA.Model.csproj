@@ -66,13 +66,19 @@
     <Compile Include="Migrations\201610291548446_UserInfo.Designer.cs">
       <DependentUpon>201610291548446_UserInfo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201705091222013_dbset.cs" />
+    <Compile Include="Migrations\201705091222013_dbset.Designer.cs">
+      <DependentUpon>201705091222013_dbset.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="OAEntities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RoleInfo.cs" />
     <Compile Include="R_UserInfo_ActionInfo.cs" />
     <Compile Include="SearchDetails.cs" />
+    <Compile Include="Search\ActionInfoSearch.cs" />
     <Compile Include="Search\BaseSearch.cs" />
+    <Compile Include="Search\RoleInfoSearch.cs" />
     <Compile Include="Search\UserInfoSerach.cs" />
     <Compile Include="UserInfo.cs" />
   </ItemGroup>
@@ -86,6 +92,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201610291548446_UserInfo.resx">
       <DependentUpon>201610291548446_UserInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201705091222013_dbset.resx">
+      <DependentUpon>201705091222013_dbset.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

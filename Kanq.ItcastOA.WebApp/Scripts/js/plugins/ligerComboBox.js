@@ -93,7 +93,7 @@
         valueFieldCssClass: null,
         isRowReadOnly: null,        //选项是否只读的判定函数
         rowClsRender: null,       //选项行 class name 自定义函数
-        keySupport: false,              //按键支持： 上、下、回车 支
+        keySupport: false,              //按键支持: 上、下、回车 支
         initIsTriggerEvent: false,      //初始化时是否触发选择事件
         conditionSearchClick: null,      //下拉框表格搜索按钮自定义函数
         onChangeValue: null,
@@ -1569,7 +1569,7 @@
             }
         },
         //设置值到 文本框和隐藏域
-        //isSelectEvent：是否选择事件
+        //isSelectEvent:是否选择事件
         _changeValue: function (newValue, newText,isSelectEvent)
         {
             var g = this, p = this.options;

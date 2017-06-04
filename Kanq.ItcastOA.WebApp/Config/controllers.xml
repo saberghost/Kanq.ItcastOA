@@ -2,6 +2,7 @@
 <objects xmlns="http://www.springframework.net">
   <object type="Kanq.ItcastOA.WebApp.Controllers.UserInfoController, Kanq.ItcastOA.WebApp" singleton="false" >
     <property name="userInfoService" ref="UserInfoService" />
+    <property name="RoleInfoService" ref="RoleInfoService" />
   </object>
 
   <object type="Kanq.ItcastOA.WebApp.Controllers.LoginController, Kanq.ItcastOA.WebApp" singleton="false" >
@@ -10,6 +11,21 @@
 
   <object type="Kanq.ItcastOA.WebApp.Controllers.BooksController, Kanq.ItcastOA.WebApp" singleton="false" >
     <property name="BooksService" ref="BooksService" />
+  </object>
+
+  <object type="Kanq.ItcastOA.WebApp.Controllers.SearchController, Kanq.ItcastOA.WebApp" singleton="false" >
+    <property name="BooksService" ref="BooksService" />
+    <property name="SearchDetailsService" ref="SearchDetailsService" />
+    <property name="KeyWordsRankService" ref="KeyWordsRankService" />
+  </object>
+
+  <object type="Kanq.ItcastOA.WebApp.Controllers.ActionInfoController, Kanq.ItcastOA.WebApp" singleton="false" >
+    <property name="ActionInfoService" ref="ActionInfoService" />
+    <property name="RoleInfoService" ref="RoleInfoService" />
+  </object>
+
+  <object type="Kanq.ItcastOA.WebApp.Controllers.RoleInfoController, Kanq.ItcastOA.WebApp" singleton="false" >
+    <property name="RoleInfoService" ref="RoleInfoService" />
   </object>
   <!--intentionally do NOT register the AccountController or the ValuesController with the container; demonstrates that the underlying
   default controller factory will properly (attempt to!) resolve all controllers not registered with Spring.NET

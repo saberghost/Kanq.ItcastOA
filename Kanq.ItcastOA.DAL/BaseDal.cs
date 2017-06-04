@@ -11,7 +11,7 @@ namespace Kanq.ItcastOA.DAL
 {
     public class BaseDal<T> where T : class, new()
     {
-        DbContext db = DbContextFactory.CreateDbContext();
+        protected DbContext db = DbContextFactory.CreateDbContext();
 
         public T AddEntity(T entity)
         {

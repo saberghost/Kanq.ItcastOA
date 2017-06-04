@@ -35,5 +35,17 @@ namespace Kanq.ItcastOA.BLL
             userInfoSearch.TotalCount = temp.Count();
             return temp.OrderBy(u => u.ID).Skip((userInfoSearch.PageIndex - 1) * userInfoSearch.PageSize).Take(userInfoSearch.PageSize);
         }
+
+        public bool setRole(int userId, List<int> roleIds)
+        {
+            var userInfo = CurrentDal.LoadEntities(t => t.ID == userId).FirstOrDefault();
+            userInfo.RoleInfo.Clear();
+            var roleInfos = CurrentDBSession.RoleInfoDal.LoadEntities(t => roleIds.Contains(t.ID));
+            foreach (var roleInfo in roleInfos)
+            {
+                userInfo.RoleInfo.Add(roleInfo);
+            }
+            return CurrentDBSession.SaveChanges();
+        }
     }
 }

@@ -62,6 +62,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>IDBSessionAuto.tt</DependentUpon>
     </Compile>
+    <Compile Include="IKeyWordsRankDal.cs" />
     <Compile Include="IUserInfoDal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

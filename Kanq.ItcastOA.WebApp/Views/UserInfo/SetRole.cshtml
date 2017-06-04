@@ -1,0 +1,56 @@
+﻿@using Kanq.ItcastOA.Model
+@model Kanq.ItcastOA.Model.UserInfo
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SetRole</title>
+    <script src="~/Scripts/jquery-1.12.4.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script>
+        function submitForm() {
+            $("form").submit();
+        }
+
+        function afterSetRole(data) {
+            if (data == "ok") {
+                window.parent.window.afterSetRole();
+            }
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <h2>当前给用户：@Model.UName 设置角色</h2>
+        <hr />
+        @{
+            List<RoleInfo> allRoleInfos = ViewBag.allRoleInfos;
+            List<int> existsRoleIds = ViewBag.existsRoleIds;
+            using (Ajax.BeginForm("ProcessSetRole", "UserInfo", new AjaxOptions() { OnSuccess = "afterSetRole" }))
+            {
+                <input type="hidden" name="userId" value="@Model.ID" />
+                foreach (var roleInfo in allRoleInfos)
+                {
+                    string str = "ckb_" + roleInfo.ID;
+                    if (existsRoleIds.Contains(roleInfo.ID))
+                    {
+                        <input type="checkbox" checked="checked" name="@str" id="@str" value="@str" />
+
+                    }
+                    else
+                    {
+                        <input type="checkbox" name="@str" id="@str" value="@str" />
+                    }
+                    <label for="@str">@roleInfo.RoleName</label>
+                }
+            }
+        }
+    </div>
+</body>
+</html>

@@ -5,6 +5,9 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Kanq.ItcastOA.BLL;
+using Kanq.ItcastOA.IBLL;
+using Kanq.ItcastOA.Model;
 
 namespace Kanq.ItcastOA.WebApp
 {
@@ -14,7 +17,9 @@ namespace Kanq.ItcastOA.WebApp
         {
             //MemcacheHelper.Set("name", "Tom");
             //Response.Write(MemcacheHelper.Get("name").ToString());
-            
+            //OAEntities db = new OAEntities();
+            //db.Database.Create();
+            Response.Write("ok");
         }
     }
 }

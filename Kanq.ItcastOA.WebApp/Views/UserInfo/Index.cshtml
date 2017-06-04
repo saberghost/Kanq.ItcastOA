@@ -17,6 +17,8 @@
         $(function () {
             $("#AddDiv").css("display", "none");
             $("#EditDiv").css("display", "none");
+            $("#SetRoleDiv").css("display", "none");
+            $("#SetActionDiv").css("display", "none");
             loadDataGrid();
             $("#btnSearch").linkbutton({
                 text: "查询",
@@ -26,6 +28,11 @@
                 }
             });
         });
+
+        function afterSetRole() {
+            $.messager.alert("提示", "角色设置成功", "error");
+            $("#SetRoleDiv").dialog("close");
+        }
 
         function reloadData() {
             $("#tt").datagrid("load", {
@@ -52,6 +59,16 @@
                     text: '删除',
                     iconCls: 'icon-remove',
                     handler: 'DelUserInfo'
+                }, {
+                    id: 'btnSetRole',
+                    text: '设置角色',
+                    iconCls: 'icon-undo',
+                    handler: 'SetRole'
+                }, {
+                    id: 'btnSetAction',
+                    text: '设置特殊权限',
+                    iconCls: 'icon-undo',
+                    handler: 'SetAction'
                 }],
                 pagination: true,//分页
                 pageSize: 10,//每页记录数
@@ -73,6 +90,66 @@
                 singleSelect: false//单选模式
             })
         };
+
+        //设置用户角色
+        function SetRole() {
+            var rows = $("#tt").datagrid("getSelections");
+            if (rows.length != 1) {
+                $.messager.alert("提示", "请选择一行进行设置", "error");
+                return;
+            }
+            $("#SetRoleDiv").css("display", "");
+            var id = rows[0].ID;
+            $("#SetRoleIframe").attr("src", "/UserInfo/SetRole/" + id);
+            $("#SetRoleDiv").dialog({
+                //width: 750,
+                //height: 350,
+                title: "设置权限",
+                collapsible: false,
+                maximizable: false,
+                resizable: false,
+                modal: true,
+                onClose: function () {
+                },
+                toolbar: [{
+                    text: '保存',
+                    iconCls: 'icon-save',
+                    handler: function () {
+                        $("#SetRoleIframe")[0].contentWindow.submitForm();
+                    }
+                }],
+            });
+        }
+
+        //设置用户特殊权限
+        function SetAction() {
+            var rows = $("#tt").datagrid("getSelections");
+            if (rows.length != 1) {
+                $.messager.alert("提示", "请选择一行进行设置", "error");
+                return;
+            }
+            $("#SetActionDiv").css("display", "");
+            var id = rows[0].ID;
+            $("#SetActionIframe").attr("src", "/UserInfo/SetAction/" + id);
+            $("#SetActionDiv").dialog({
+                //width: 750,
+                //height: 350,
+                title: "设置权限",
+                collapsible: false,
+                maximizable: false,
+                resizable: false,
+                modal: true,
+                onClose: function () {
+                },
+                toolbar: [{
+                    text: '保存',
+                    iconCls: 'icon-save',
+                    handler: function () {
+                        $("#SetActionIframe")[0].contentWindow.submitForm();
+                    }
+                }],
+            });
+        }
 
         function EditUserInfo() {
             var rows = $("#tt").datagrid("getSelections");
@@ -192,8 +269,8 @@
 <body>
     <div id="master">
         <div id="Search">
-            用户名：<input type="text" id="txtUname" name="Uname"/>&nbsp;&nbsp;&nbsp;
-            备注：<input type="text" id="txtRemark" name="Remark"/>
+            用户名:<input type="text" id="txtUname" name="Uname"/>&nbsp;&nbsp;&nbsp;
+            备注:<input type="text" id="txtRemark" name="Remark"/>
             <a id="btnSearch"></a>
         </div>
         <div>
@@ -206,19 +283,19 @@
         <form id="AddForm" method="post">
             <table>
                 <tr>
-                    <td>用户名：</td>
+                    <td>用户名:</td>
                     <td><input type="text" name="UName" /></td>
                 </tr>
                 <tr>
-                    <td>密码：</td>
+                    <td>密码:</td>
                     <td><input id="UPwd" type="text" name="UPwd" /></td>
                 </tr>
                 <tr>
-                    <td>备注：</td>
+                    <td>备注:</td>
                     <td><input type="text" name="Remark" /></td>
                 </tr>
                 <tr>
-                    <td>排序字段：</td>
+                    <td>排序字段:</td>
                     <td><input type="text" name="Sort" /></td>
                 </tr>
             </table>
@@ -233,23 +310,33 @@
             <input type="hidden" name="SubTime" />
             <table>
                 <tr>
-                    <td>用户名：</td>
+                    <td>用户名:</td>
                     <td><input type="text" name="UName" /></td>
                 </tr>
                 <tr>
-                    <td>密码：</td>
+                    <td>密码:</td>
                     <td><input id="UPwdE" type="text" name="UPwd" /></td>
                 </tr>
                 <tr>
-                    <td>备注：</td>
+                    <td>备注:</td>
                     <td><input type="text" name="Remark" /></td>
                 </tr>
                 <tr>
-                    <td>排序字段：</td>
+                    <td>排序字段:</td>
                     <td><input type="text" name="Sort" /></td>
                 </tr>
             </table>
         </form>
+    </div>
+
+    <!--设置角色-->
+    <div id="SetRoleDiv">
+        <iframe id="SetRoleIframe" src="javascript:void(0)"></iframe>
+    </div>
+
+    <!--设置权限-->
+    <div id="SetActionDiv">
+        <iframe id="SetActionIframe" src="javascript:void(0)"></iframe>
     </div>
 </body>
 </html>

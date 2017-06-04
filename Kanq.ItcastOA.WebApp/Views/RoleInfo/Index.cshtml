@@ -1,0 +1,239 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    @Styles.Render("~/Content/easyui")
+    <style>
+    </style>
+    @Scripts.Render("~/bundles/jquery", "~/bundles/easyui")
+    <script>
+        $(function () {
+            $("#AddDiv").css("display", "none");
+            $("#EditDiv").css("display", "none");
+            loadDataGrid();
+            $("#btnSearch").linkbutton({
+                text: "查询",
+                iconCls: "icon-search",
+                onClick: function () {
+                    reloadData();
+                }
+            });
+        });
+
+        function reloadData() {
+            $("#tt").datagrid("load", {
+                RoleName: $("#txtRoleName").val(),
+                Remark: $("#txtRemark").val()
+            });
+        }
+
+        function loadDataGrid() {
+            /// <summary>加载数据列表</summary>
+            $("#tt").datagrid({
+                toolbar: [{
+                    id: 'btnAdd',
+                    text: '添加',
+                    iconCls: 'icon-add',
+                    handler: 'AddRoleInfo'
+                }, {
+                    id: 'btnEdit',
+                    text: '修改',
+                    iconCls: 'icon-edit',
+                    handler: 'EditRoleInfo'
+                }, {
+                    id: 'btnDel',
+                    text: '删除',
+                    iconCls: 'icon-remove',
+                    handler: 'DelRoleInfo'
+                }],
+                pagination: true,//分页
+                pageSize: 10,//每页记录数
+                pageList: [10, 20],//可选择的每页记录数
+                height: 500,
+                url: "/RoleInfo/GetRoleInfoList",
+                //fit: true,
+                //queryParams: { action: "ShowList" },
+                columns:
+                [[
+                    { field: 'ck', checkbox: true },
+                    { field: 'ID', title: '编号', align: "center", width: 80 },
+                    { field: 'RoleName', title: '角色名', align: "center", width: 80},
+                    { field: 'Remark', title: '备注', align: "center", width: 150 },
+                    { field: 'SubTime', title: '注册时间', align: "center", width: 150 },
+                    { field: 'ModifiedOn', title: '修改时间', align: "center", width: 150 },
+                    { field: 'Sort', title: '排序字段', align: "center", width: 150 }
+                ]],
+                striped: true,//显示条纹
+                singleSelect: false//单选模式
+            })
+        };
+
+        function EditRoleInfo() {
+            var rows = $("#tt").datagrid("getSelections");
+            if (rows.length != 1) {
+                $.messager.alert("提示", "请选择一行进行修改", "error");
+                return;
+            }
+            var id = rows[0].ID;
+            $("#EditDiv").css("display", "block");
+            $("#EditForm").form("load", "/RoleInfo/ShowRoleInfo/" + id);
+            $("#EditDiv").dialog({
+                //width: 750,
+                //height: 350,
+                title: "修改角色",
+                collapsible: false,
+                maximizable: false,
+                resizable: false,
+                modal: true,
+                onClose: function () {
+                    $("#EditForm").form("clear");
+                },
+                toolbar: [{
+                    text: '保存',
+                    iconCls: 'icon-save',
+                    handler: function () {
+                        $("#EditForm").form("submit", {
+                            url: "/RoleInfo/EditRoleInfo",
+                            onSubmit: function () {
+                                return $("#EditForm").form("validate");
+                            },
+                            success: function (data) {
+                                if (data && data == "ok") {
+                                    $("#tt").datagrid("reload");
+                                    $("#EditDiv").dialog("close");
+                                }
+                                else {
+                                    $.messager.alert("警告", "角色修改失败", "error");
+                                }
+                            }
+                        });
+                    }
+                }],
+            });
+        }
+
+        function AddRoleInfo() {
+            $("#AddDiv").css("display", "block");
+            $("#AddDiv").dialog({
+                //width: 750,
+                //height: 350,
+                title: "添加角色",
+                collapsible: false,
+                maximizable: false,
+                resizable: false,
+                modal: true,
+                onClose: function () {
+                    $("#AddDiv").form("clear");
+                },
+                toolbar: [{
+                    text: '保存',
+                    iconCls: 'icon-save',
+                    handler: function () {
+                        $("#AddForm").form("submit", {
+                            url: "/RoleInfo/AddRoleInfo",
+                            onSubmit: function () {
+                                return $("#AddForm").form("validate");
+                            },
+                            success: function (data) {
+                                if (data && data == "ok") {
+                                    $("#tt").datagrid("reload");
+                                    $("#AddDiv").dialog("close");
+                                }
+                                else {
+                                    $.messager.alert("警告", "角色添加失败", "error");
+                                }
+                            }
+                        });
+                    }
+                }],
+            });
+        }
+
+        function DelRoleInfo() {
+            var rows = $("#tt").datagrid("getSelections");
+            if (rows.length == 0) {
+                $.messager.alert("提示", "请选择一行进行删除", "error");
+                return;
+            }
+            $.messager.confirm("提示", "确定要删除吗？", function (r) {
+                if (r) {
+                    var idList = [];
+                    var rowsLength = rows.length;
+                    for (var i = 0; i < rowsLength; i++) {
+                        idList.push(rows[i].ID);
+                    }
+                    $.post("/RoleInfo/DeleteRoleInfo", { idList: idList.join(",") }, function (data) {
+                        if (data == "ok") {
+                            $("#tt").datagrid("reload");
+                        }
+                        else {
+                            $.messager.alert("提示", "删除失败", "error");
+                        }
+                    });
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="master">
+        <div id="Search">
+            角色名:<input type="text" id="txtRoleName" name="RoleName" />&nbsp;&nbsp;&nbsp;
+            备注:<input type="text" id="txtRemark" name="Remark" />
+            <a id="btnSearch"></a>
+        </div>
+        <div>
+            <table id="tt"></table>
+        </div>
+    </div>
+    <!--新增角色-->
+    <div id="AddDiv">
+        <form id="AddForm" method="post">
+            <table>
+                <tr>
+                    <td>角色名:</td>
+                    <td><input type="text" name="RoleName" /></td>
+                </tr>
+                <tr>
+                    <td>备注:</td>
+                    <td><input type="text" name="Remark" /></td>
+                </tr>
+                <tr>
+                    <td>排序字段:</td>
+                    <td><input type="text" name="Sort" /></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+
+    <!--修改角色-->
+    <div id="EditDiv">
+        <form id="EditForm" method="post">
+            <input type="hidden" name="ID" />
+            <input type="hidden" name="DelFlag" />
+            <input type="hidden" name="SubTime" />
+            <table>
+                <tr>
+                    <td>角色名:</td>
+                    <td><input type="text" name="RoleName" /></td>
+                </tr>
+                <tr>
+                    <td>备注:</td>
+                    <td><input type="text" name="Remark" /></td>
+                </tr>
+                <tr>
+                    <td>排序字段:</td>
+                    <td><input type="text" name="Sort" /></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+</body>
+</html>

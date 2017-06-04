@@ -1,4 +1,5 @@
-﻿using Spring.Web.Mvc;
+﻿using Kanq.ItcastOA.WebApp.Models;
+using Spring.Web.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,8 @@ namespace Kanq.ItcastOA.WebApp
         protected void Application_Start()
         {
             log4net.Config.XmlConfigurator.Configure();
+            //扫描LuceneNet队列中的数据
+            IndexMananger.GetInstance().StartThread();
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

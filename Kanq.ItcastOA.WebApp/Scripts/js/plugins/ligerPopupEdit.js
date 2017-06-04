@@ -278,7 +278,7 @@
             g.valueField.val(value);
             //g.setTextByVal(value);
         },
-        //根据值设置文本  value：数值或文本
+        //根据值设置文本  value:数值或文本
         setTextByVal: function (value)
         {
             value = (typeof (value) != "string") ? value.toString : value;

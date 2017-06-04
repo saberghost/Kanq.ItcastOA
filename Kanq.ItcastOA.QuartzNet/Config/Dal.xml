@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<objects xmlns="http://www.springframework.net">
+    <object name="ActionInfoDal" type="Kanq.ItcastOA.DAL.ActionInfoDal, Kanq.ItcastOA.DAL" singleton="false" />
+    <object name="BooksDal" type="Kanq.ItcastOA.DAL.BooksDal, Kanq.ItcastOA.DAL" singleton="false" />
+    <object name="DepartmentDal" type="Kanq.ItcastOA.DAL.DepartmentDal, Kanq.ItcastOA.DAL" singleton="false" />
+    <object name="KeyWordsRankDal" type="Kanq.ItcastOA.DAL.KeyWordsRankDal, Kanq.ItcastOA.DAL" singleton="false" />
+    <object name="RoleInfoDal" type="Kanq.ItcastOA.DAL.RoleInfoDal, Kanq.ItcastOA.DAL" singleton="false" />
+    <object name="R_UserInfo_ActionInfoDal" type="Kanq.ItcastOA.DAL.R_UserInfo_ActionInfoDal, Kanq.ItcastOA.DAL" singleton="false" />
+    <object name="SearchDetailsDal" type="Kanq.ItcastOA.DAL.SearchDetailsDal, Kanq.ItcastOA.DAL" singleton="false" />
+    <object name="UserInfoDal" type="Kanq.ItcastOA.DAL.UserInfoDal, Kanq.ItcastOA.DAL" singleton="false" />
+</objects>
